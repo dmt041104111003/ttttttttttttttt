@@ -1,0 +1,27 @@
+﻿@model IEnumerable<SanPham>
+@{
+    ViewData["Title"] = "Home Page";
+    Layout = "~/Views/Shared/_Layout1.cshtml";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="nonloop-block-3 owl-carousel">
+             @foreach (var i in Model)
+            {
+            <div class="item">
+                <div class="block-4 text-center">
+                    <figure class="block-4-image">
+                            <a asp-action="Details" asp-route-id="@i.MaSanPham"><img src="@Url.Content("../Images/" + @i.AnhDaiDien)" alt="Image placeholder" class="img-fluid"></a>
+                    </figure>
+                    <div class="block-4-text p-4">
+                        <h3><a href="#">@i.TenSanPham</a></h3>
+                        <p class="mb-0">Finding perfect t-shirt</p>
+                        <p class="text-primary font-weight-bold">@i.DonGiaBanNhoNhat</p>
+                    </div>
+                </div>
+            </div>
+            }
+        </div>
+    </div>
+</div>

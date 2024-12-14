@@ -1,0 +1,46 @@
+﻿@model IEnumerable<PhanLoai>
+@foreach (var i in Model)
+{
+    <li><a style="cursor:pointer" onclick="loadData('@i.MaPhanLoai')">@i.MaPhanLoai</a></li>
+
+
+}
+
+<script>
+    function loadData(MaSanPham) {
+        $.ajax({
+            url: '@Url.Action("GetData", "Home")',
+            type: 'GET',
+            data: { MaSanPham: MaSanPham },
+            success: function (response) {
+                console.log(response);
+                if (response.length > 0) {
+                    let tableHtml = `  <div class="row align-items-center">`;
+                    response.forEach(product => {
+                        tableHtml += `
+
+       <div class="col-md-12 col-lg-7 mb-5">
+                        <a href="#"><img src="/Images/${product.anhDaiDien}" alt="Image placeholder" class="img-fluid rounded"></a>
+                    </div>
+                    <div class="col-md-12 col-lg-5 text-center pl-md-5">
+                        <h2><a href="#">${product.tenSanPham}</a></h2>
+                        <p class="post-meta mb-4">By <a href="#">Carl Smith</a> <span class="block-8-sep">&bullet;</span> September 3, 2018</p>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quisquam iste dolor accusantium facere corporis ipsum animi deleniti fugiat. Ex, veniam?</p>
+                        <p><a href="#" class="btn btn-primary btn-sm">Shop Now</a></p>
+                    </div>
+
+                            `;
+                    });
+
+    tableHtml += ` </div>`;
+                    $('#result').html(tableHtml);
+                } else {
+                    $('#result').html('<p>Không có sản phẩm nào được tìm thấy.</p>');
+                }
+            },
+            error: function () {
+                $('#result').html('<p>Đã xảy ra lỗi khi tải dữ liệu.</p>');
+            }
+        });
+    }
+</script>
